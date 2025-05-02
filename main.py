@@ -28,7 +28,7 @@ async def root():
     """
     Root endpoint for the application.
     """
-    return {"message": "Hello! Welcome to Our Qook-Qloud"}
+    return {"message": "Hello! Welcome to Our QooQ-Qloud"}
 
 # Include class and student routes
 app.include_router(class_routes.router)

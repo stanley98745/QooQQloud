@@ -1,4 +1,4 @@
-QookQlcloud/
+QooQQloud/
 ├── .venv/                        
 ├── db/
 │   ├── crud.py                   # Database operations, including CRUD for students, classes, and record logs
