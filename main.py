@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
-from routers import class_routes, student_routes, users_route
-from db.database import initialize_database
+from app.api.v1 import class_routes, student_routes, users_route
+from app.db.database import initialize_database
 
 
 async def lifespan(app: FastAPI):

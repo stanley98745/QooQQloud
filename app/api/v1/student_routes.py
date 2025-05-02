@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
-from db.database import get_database_session
-from db.models import Student, Class
-from routers.validate import validate_id  # Import the generic ID validation function
-from schemas.student_schema import StudentCreate, StudentUpdate, StudentResponse
+from app.db.database import get_database_session
+from app.models.models import Student, Class
+from app.api.v1.validate import validate_id  # Import the generic ID validation function
+from app.schemas.student_schema import StudentCreate, StudentUpdate, StudentResponse
 from typing import List
 import openpyxl
 import pandas as pd
