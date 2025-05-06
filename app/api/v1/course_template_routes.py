@@ -11,7 +11,7 @@ from app.crud.course_template_crud import (
     delete_course_template
 )
 from app.db.database import get_database_session as get_db
-from app.api.v1.auth import get_current_user  # 假設你有這個方法
+from app.api.v1.auth import get_current_user
 from app.models.models import User
 
 router = APIRouter(

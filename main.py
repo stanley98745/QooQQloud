@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from app.api.v1 import class_routes, student_routes, users_route, course_template_routes
+from app.api.v1 import class_routes, student_routes, users_route, course_template_routes, opened_courses
 from app.api.v1 import auth
 from app.db.database import initialize_database
 
@@ -22,7 +22,11 @@ async def lifespan(app: FastAPI):
 
 
 # Use Lifespan for application lifecycle events
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    title="QooQQloud 尚課 XR 課程管理平台 API",
+    description="此平台提供班級管理、XR 課程導入、設備綁定與學習歷程等功能。",
+    version="0.1.0",
+    lifespan=lifespan)
 
 @app.get("/")
 async def root():
@@ -37,6 +41,7 @@ app.include_router(student_routes.router)
 app.include_router(users_route.router)
 app.include_router(course_template_routes.router)
 app.include_router(auth.router)
+app.include_router(opened_courses.router)
 
 
 if __name__ == '__main__':
