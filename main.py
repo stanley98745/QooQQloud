@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
-from app.api.v1 import class_routes, student_routes, users_route
+from app.api.v1 import class_routes, student_routes, users_route, course_template_routes
+from app.api.v1 import auth
 from app.db.database import initialize_database
 
 
@@ -34,6 +35,8 @@ async def root():
 app.include_router(class_routes.router)
 app.include_router(student_routes.router)
 app.include_router(users_route.router)
+app.include_router(course_template_routes.router)
+app.include_router(auth.router)
 
 
 if __name__ == '__main__':

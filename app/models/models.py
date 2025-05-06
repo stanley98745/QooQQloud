@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, text
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from sqlalchemy import Enum
 from app.db.database import Base
 
 
@@ -18,7 +20,6 @@ class Student(Base):
     def __repr__(self):
         return f"<Student(student_ID={self.student_ID}, student_name={self.student_name})>"
 
-
 class Teacher(Base):
     """Model for teachers."""
     __tablename__ = "teachers"
@@ -32,7 +33,6 @@ class Teacher(Base):
 
     def __repr__(self):
         return f"<Teacher(teacher_ID={self.teacher_ID}, teacher_name={self.teacher_name}, title={self.title})>"
-
 
 class Class(Base):
     """Model for classes."""
@@ -50,6 +50,18 @@ class Class(Base):
 
     def __repr__(self):
         return f"<Class(class_ID={self.class_ID}, class_name={self.class_name}, year={self.year})>"
+
+class CourseTemplate(Base):
+    """Model for course templates."""
+    __tablename__ = "course_templates"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(100), nullable=False)
+    description = Column(Text)
+    version = Column(String(20), nullable=False)
+    file_url = Column(Text, nullable=True)  # 儲存 XR 課程 Asset 的下載網址（若未來用得到）
+    uploaded_at = Column(DateTime(timezone=True), server_default=func.now())
+    uploader_id = Column(Integer, ForeignKey("users.user_ID"), nullable=False)
+    is_active = Column(Boolean, default=True)
 
 
 class OpenCourse(Base):
@@ -73,7 +85,6 @@ class OpenCourse(Base):
     def __repr__(self):
         return f"<OpenCourse(open_course_ID={self.open_course_ID})>"
 
-
 class AllCourses(Base):
     """Model for all courses."""
     __tablename__ = "all_courses"
@@ -93,6 +104,5 @@ class User(Base):
     user_ID = Column(Integer, primary_key=True, nullable=False)
     account = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
-    role = Column(Integer, nullable=True)
-    created_at = Column(TIMESTAMP(timezone=True),
-                        nullable=False, server_default=text("now()"))
+    role = Column(String(20), nullable=True)  # 原本是 Integer → 改為字串角色
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=func.now())
